@@ -1,0 +1,16 @@
+{
+  "name": "todo-list-with-watch-option",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "vue": "^3.0.3"
+  },
+  "devDependencies": {
+    "vite": "^1.0.0-rc.13",
+    "@vue/compiler-sfc": "^3.0.3"
+  }
+}
