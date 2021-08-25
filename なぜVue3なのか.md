@@ -109,6 +109,10 @@ export const useFullName = (firstName, lastName) => {
 
 あとは **TypeScript** を使ってコード書くかが検討課題になる（実際多くの Vue3 のサンプルコードは TypeScript になっている）。しかしそれはまた別の話。
 
+#### リンク
+
+[本家サイト：Vue 3 の新機能と変更点ガイド](https://v3.ja.vuejs.org/guide/migration/introduction.html#%E6%A6%82%E8%A6%81)
+
 #### 参考
 
 - Vuejs ビギナーズガイド 3.x 対応 （C&R 研究所）
