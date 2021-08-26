@@ -1,18 +1,15 @@
 <template>
-  <input v-model="inputValue">
-  <button v-on:click="handleClick">
-    ToDoを追加
-  </button>
-  <input
-    v-model="filterValue"
-    placeholder="フィルタテキスト">
+  <input v-model="inputValue" />
+  <button v-on:click="handleClick">ToDoを追加</button>
+  <input v-model="filterValue" placeholder="フィルタテキスト" />
   <ul>
     <li
       v-for="todo in filteredTodoItems"
       v-bind:key="todo.id"
       class="todo-item"
-      v-bind:class="{'done': todo.done}"
-      v-on:click="todo.done = !todo.done">
+      v-bind:class="{ done: todo.done }"
+      v-on:click="todo.done = !todo.done"
+    >
       <span v-if="todo.done">✓</span> {{ todo.text }}
     </li>
   </ul>
@@ -21,20 +18,20 @@
 export default {
   data() {
     return {
-      inputValue: '',
+      inputValue: "",
       todoItems: [
         {
           id: 1,
           done: false,
-          text: 'Go out to sea'
+          text: "Go out to sea"
         },
         {
           id: 2,
           done: false,
-          text: 'Invite the first member'
+          text: "Invite the first member"
         }
       ],
-      filterValue: '',
+      filterValue: ""
     }
   },
   computed: {
@@ -54,7 +51,7 @@ export default {
         done: false,
         text: this.inputValue
       })
-      this.inputValue = ''
+      this.inputValue = ""
     }
   }
 }
