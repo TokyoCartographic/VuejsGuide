@@ -67,7 +67,7 @@ src            // ソースフォルダ
     components // 各種コンポーネントフォルダ
         HelloWorld.vue // サンプルVueコンポーネント
     App.vue    // 最初に表示されるコンポーネント
-    main.js    // 最初に実行されるプログラム
+    main.js    // エントリーポイント（最初に実行されるプログラム）
 .gitignore     // GitHubにアップしないもの
 index.html     // 公開用index.htmlの元になるhtmlファイル
 package.json   // インストールされたモジュールのリストほか
