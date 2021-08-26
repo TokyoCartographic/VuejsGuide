@@ -25,8 +25,8 @@ npm init vite
 その後どのフレームワークを使うかの選択画面になる。
 
 ```
->   vanilla
-    vue
+    vanilla
+>   vue
     react
     preact
     lit-element
