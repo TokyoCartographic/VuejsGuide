@@ -71,6 +71,7 @@ src            // ソースフォルダ
 .gitignore     // GitHubにアップしないもの
 index.html     // 公開用index.htmlの元になるhtmlファイル
 package.json   // インストールされたモジュールのリストほか
+vite.config.js // viteの設定ファイル
 yarn.lock      // インストールされたモジュールバージョンやその依存モジュールも含む詳細リスト
 ```
 
