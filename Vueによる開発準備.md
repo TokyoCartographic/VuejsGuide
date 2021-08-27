@@ -72,7 +72,7 @@ yarn create vite
 npm のとき
 
 ```shell
-npm init vite@latest
+npm init vite
 ```
 
 作成されるプロジェクトフォルダの構成は **vue-cli** のものとほぼ同じだ。ただ **public** フォルダには favicon.ico しか存在せず、**index.html** はプロジェクトフォルダの直下に置かれる。また index.html の内容も少し異なる。

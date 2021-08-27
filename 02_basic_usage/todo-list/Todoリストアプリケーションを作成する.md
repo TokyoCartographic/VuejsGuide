@@ -248,7 +248,13 @@ export default {
 </script>
 ```
 
-import したコンポーネントを`<template>`内で使えるように、プロパティ（オプション）**components**内に格納する。
+import したコンポーネントを`<template>`内で使えるように、プロパティ（オプション）**components**内に格納する。でも setup シンタックスシュガー記法を使えば極端に短く書くことができそう。
+
+```vue
+<script setup>
+import ToDoList from "./components/ToDoList.vue"
+</script>
+```
 
 ## ToDoList.vue
 
