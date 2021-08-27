@@ -46,6 +46,9 @@ export default {
   },
   methods: {
     handleClick() {
+      if (!this.inputValue) {
+        return
+      }
       this.todoItems.push({
         id: this.todoItems.length + 1,
         done: false,
