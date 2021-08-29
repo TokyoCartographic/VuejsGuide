@@ -1,6 +1,9 @@
-# はじめて Vue プリケーション
+# はじめて Vue アプリケーション
 
 **Vue.js**は**Evan You**さんが 2014 年に公開した JavaScript のフレームワーク・ライブラリ。現在のバージョンは 3.2.6 (2021.8.24)
+
+リンク：[Vue.js](https://v3.vuejs.org/)（豊富なドキュメントがある）
+[日本語](https://v3.ja.vuejs.org/)
 
 ## Vue.js の特徴
 
