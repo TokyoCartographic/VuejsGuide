@@ -6,7 +6,7 @@ slot コンポーネントは、親コンポーネントから子コンポーネ
 
 サンプルの子コンポーネント ChildComponent.vue は、h1 要素ひとつだけもち、その下に親から渡されるものを格納表示するための slot 要素をもつ。
 
-```vue
+```js
 <template>
   <h1>Child Component</h1>
   <slot />
@@ -15,11 +15,11 @@ slot コンポーネントは、親コンポーネントから子コンポーネ
 
 サンプルの親コンポーネント ParentComponent は、import した ChildComponent コンポーネントのタグの間に `<span>`要素と`<button>`要素が記述されている。これが子コンポーネントの`<slot />`に表示される。
 
-```vue
+```js
 <template>
   <ChildComponent>
     <span>押して：</span>
-    <button @click="onClick">ボタン</button>
+    <button v-on:click="onClick">ボタン</button>
   </ChildComponent>
 </template>
 ```
