@@ -21,10 +21,33 @@
 </ChildComponent>
 ```
 
-v-slot の簡易記法は'#'になる。この他にも省略記法がいろいろあるみたいだ（[ドキュメント](https://v3.ja.vuejs.org/guide/component-slots.html)）。
+**v-slot** の簡易記法は'**#**'になる。この他にも省略記法がいろいろあるみたいだ（[ドキュメント](https://v3.ja.vuejs.org/guide/component-slots.html)）。
 
-ちょっと疑問なのは、複数ある場合はどうするのだろう？
+複数ある場合はどうするのだろう？簡易記法を使って書くとこんな感じになる。
 
-slot は、UI コンポーネントライブラリを操作するときなどに必須の知識になることがある。
+子コンポーネント
+
+```js
+<template>
+  <h1> Message </h1>
+  <slot
+    :foo="'Hello World'"
+    :bar="'こんにちは！'"
+   />
+</template>
+```
+
+親コンポーネント
+
+```js
+<ChildComponent>
+  <template #default="slotProps">
+    <p> {{ slotProps.foo }} </p>
+    <p> {{ slotProps.bar }} </p>
+  </template>
+</ChildComponent>
+```
+
+slot は、vuetify などの UI コンポーネントライブラリを操作するときなどに必須の知識になることがある。
 
 以上
