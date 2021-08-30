@@ -9,10 +9,6 @@ export default {
     handleClick() {
       // this.counterContainerには
       // 注入されたデータが格納されている
-      /*
-      const container = this.counterContainer
-      container.count++
-      */
       this.counterContainer.count++
     }
   }
