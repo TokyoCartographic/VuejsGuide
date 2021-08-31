@@ -1,19 +1,10 @@
-<template>
-  <input v-model="inputValue" />
-  <button v-on:click="handleClick">ToDoを追加</button>
-  <input v-model="filterValue" placeholder="フィルタテキスト" />
-  <ul>
-    <li
-      v-for="todo in filteredTodoItems"
-      v-bind:key="todo.id"
-      class="todo-item"
-      v-bind:class="{ done: todo.done }"
-      v-on:click="todo.done = !todo.done"
-    >
-      <span v-if="todo.done">✓</span> {{ todo.text }}
-    </li>
-  </ul>
-</template>
+# ToDoList を CompositionAPI で書き直す
+
+Options API で書かれた ToDoList アプリケーションを Composition API を使って書き直す。Vue2 のものを Vue3 で書き直すわけではないので、変更は多岐にわたるということはなく、基本的に変更箇所は components/ToDoList.vue の`<script>`ブロックだけになる。`<template>`と`<style>`ブロックに変更はない。
+
+`<script>`ブロック内の主な変更は、data, computed オプションからの Vue3 の Reactivity API への置き換えになる。
+
+```js
 <script>
 import { ref, reactive, computed } from "vue"
 export default {
@@ -49,10 +40,6 @@ export default {
   }
 }
 </script>
-<style>
-.todo-item.done {
-  /* 背景を緑色にする */
-  background-color: #3fb983;
-  color: #ffffff;
-}
-</style>
+```
+
+以上
