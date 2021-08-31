@@ -23,6 +23,8 @@ const tripleNum = computed(() => state.num * 3)
 console.log(tripleNum.value)
 ```
 
+computed 関数の引数は算出処理を行う無名関数となることが多い。
+
 ## ref
 
 **ref**関数は、オブジェクト以外のプリミティブ値（文字列、数値、真偽値）をリアクティブ性を持つオブジェクト（**ref オブジェクト**）に変換する。
