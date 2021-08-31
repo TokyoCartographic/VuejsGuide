@@ -1,41 +1,38 @@
 <template>
-  <input v-model="inputValue">
-  <button v-on:click="handleClick">
-    ToDoを追加
-  </button>
-  <input
-    v-model="filterValue"
-    placeholder="フィルタテキスト">
+  <input v-model="inputValue" />
+  <button v-on:click="handleClick">ToDoを追加</button>
+  <input v-model="filterValue" placeholder="フィルタテキスト" />
   <ul>
     <ToDoItem
       v-for="todo in filteredTodoItems"
       v-bind:key="todo.id"
       v-bind:done="todo.done"
-      v-on:toggle="todo.done = !todo.done">
+      v-on:toggle="todo.done = !todo.done"
+    >
       <b>{{ todo.text }}</b>
     </ToDoItem>
   </ul>
 </template>
 <script>
-import ToDoItem from './ToDoItem.vue'
+import ToDoItem from "./ToDoItem.vue"
 export default {
   components: { ToDoItem },
   data() {
     return {
-      inputValue: '',
+      inputValue: "",
       todoItems: [
         {
           id: 1,
           done: false,
-          text: 'Go out to sea'
+          text: "Go out to sea"
         },
         {
           id: 2,
           done: false,
-          text: 'Invite the first member'
+          text: "Invite the first member"
         }
       ],
-      filterValue: '',
+      filterValue: ""
     }
   },
   computed: {
@@ -55,7 +52,7 @@ export default {
         done: false,
         text: this.inputValue
       })
-      this.inputValue = ''
+      this.inputValue = ""
     }
   }
 }
