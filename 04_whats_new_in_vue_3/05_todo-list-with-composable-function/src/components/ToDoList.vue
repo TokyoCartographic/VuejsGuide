@@ -39,6 +39,7 @@ export default {
       todoItems,
       (todo) => todo.text
     )
+
     return {
       inputValue,
       filterValue,

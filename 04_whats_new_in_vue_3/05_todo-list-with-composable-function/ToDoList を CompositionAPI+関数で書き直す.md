@@ -27,7 +27,7 @@ export const useTextFilter = (items, getItemText) => {
 
 ## コンポーネントでの利用
 
-コンポーネントでは以下のように利用する。
+ToDoList コンポーネントでは外部関数を以下のように利用する。
 
 ```js
 import { useTextFilter } from "./composables/useTextFilter.js"
@@ -37,7 +37,7 @@ export default {
     // ToDoリストの絞り込み関連の定義
     const { filterValue, filteredItems: filteredTodoItems } = useTextFilter(
       todoItems, // ToDo配列
-      (todo) => todo.text // コールバック関数
+      (todo) => todo.text // コールバック関数（todo.textを返す）
     )
     return {
       inputValue,
@@ -48,5 +48,7 @@ export default {
   }
 }
 ```
+
+外部関数 useTextFilter とコンポーネント ToDoList の setup 内の動きの正確な関連がよく理解できないなあ。
 
 以上
