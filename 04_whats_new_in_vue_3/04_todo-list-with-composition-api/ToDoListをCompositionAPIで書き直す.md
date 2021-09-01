@@ -1,6 +1,6 @@
 # ToDoList を CompositionAPI で書き直す
 
-Options API で書かれた ToDoList アプリケーションを Composition API を使って書き直す。Vue2 のものを Vue3 で書き直すわけではないので、変更は多岐にわたるということはなく、基本的に変更箇所は components/ToDoList.vue の`<script>`ブロックだけになる。`<template>`と`<style>`ブロックに変更はない。
+Options API で書かれた ToDoList アプリケーションを Composition API を使って書き直す。Vue2 のものを Vue3 で書き直すわけではないので、変更は多岐にわたるということはなく、変更箇所は components/ToDoList.vue の`<script>`ブロックだけになる。`<template>`と`<style>`ブロックに変更はない。
 
 `<script>`ブロック内の主な変更は、data, computed オプションからの Vue3 の Reactivity API への置き換えになる。
 
@@ -41,5 +41,7 @@ export default {
 }
 </script>
 ```
+
+ここで見えることは、Options API 記法のときは、各オプションのカテゴリーにより分断されていた、「ToDO の追加」や「ToDo の抽出」のはたらきが、Composition API 記法では setup オプションの中で役割ごとに整理されたことだ。
 
 以上
