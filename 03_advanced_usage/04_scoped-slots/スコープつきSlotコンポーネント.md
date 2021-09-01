@@ -14,11 +14,13 @@
 サンプル親コンポーネント ParentComponent では`<template>`の **v-slot** ディレクティブでスロットプロパティ **foo** を受け取っている。
 
 ```js
-<ChildComponent>
-  <template v-slot:default="{ foo }">
-    <p> {{ foo }} </p>
-  </template>
-</ChildComponent>
+<template>
+  <ChildComponent>
+    <template v-slot:default="{ foo }">
+      <p> {{ foo }} </p>
+    </template>
+  </ChildComponent>
+</template>
 ```
 
 **v-slot** の簡易記法は'**#**'になる（v-bind は'**:**'）。この他にもいろいろな省略記法があるみたいだ（[ドキュメント](https://v3.ja.vuejs.org/guide/component-slots.html)）。
@@ -40,12 +42,14 @@ slot コンテントが複数ある場合はどうするのだろう？簡易記
 親コンポーネント
 
 ```js
-<ChildComponent>
-  <template #default="slotProps">
-    <p> {{ slotProps.foo }} </p>
-    <p> {{ slotProps.bar }} </p>
-  </template>
-</ChildComponent>
+<template>
+  <ChildComponent>
+    <template #default="slotProps">
+      <p> {{ slotProps.foo }} </p>
+      <p> {{ slotProps.bar }} </p>
+    </template>
+  </ChildComponent>
+</template>
 ```
 
 スコープつき slot は、親から渡されたものを子が表示するという Vue の基本的スタンスとは異なるふるまいをもつため理解しにくいところがある。しかしこれも必要性があるから存在するわけで、まあ世のなかひとつの原理原則だけではうまくゆかない場合があるということか。
