@@ -1,0 +1,18 @@
+{
+  "name": "04_vue_testing_library",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.6"
+  },
+  "devDependencies": {
+    "@testing-library/vue": "^6.4.2",
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/compiler-sfc": "^3.2.6",
+    "vite": "^2.5.2"
+  }
+}
