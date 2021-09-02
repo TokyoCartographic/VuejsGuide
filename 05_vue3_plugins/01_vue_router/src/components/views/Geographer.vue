@@ -4,5 +4,3 @@
     <figcaption>Geographer</figcaption>
   </figure>
 </template>
-
-<script setup></script>

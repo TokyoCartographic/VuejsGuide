@@ -4,5 +4,3 @@
     <figcaption>Standing Lady at Virginal</figcaption>
   </figure>
 </template>
-
-<script setup></script>

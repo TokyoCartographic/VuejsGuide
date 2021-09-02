@@ -4,12 +4,20 @@ import Geographer from "../components/views/Geographer.vue"
 import StandingLady from "../components/views/StandingLady.vue"
 
 const routes = [
-  { path: "/geographer", component: Geographer },
-  { path: "/standinglady", component: StandingLady }
+  {
+    path: "/geographer",
+    name: "geographer",
+    component: Geographer
+  },
+  {
+    path: "/standinglady",
+    name: "standinglady",
+    component: StandingLady
+  }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 
