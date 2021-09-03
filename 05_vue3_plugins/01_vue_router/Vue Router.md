@@ -95,8 +95,10 @@ app.mount("#app")
 </template>
 ```
 
-`<router-link>`の`to`属性でルート先を設定し、クリックされたら遷移する。
-`<router-view>`コンポーネントにルート先のコンポーネントが表示される。
+`<template>`内でのルートの変更には`<router-link>`コンポーネントを使う。
+`<router-link>`の`to`属性でルート先を設定し、クリックされたら遷移する。ルート先はルート定義（router/index.js）の path プロパティで設定したものを使う。
+
+遷移先のコンポーネントは`<router-view>`コンポーネントのところに表示される。
 
 ## 表示コンポーネント
 
@@ -120,9 +122,14 @@ app.mount("#app")
 - this.$route
 - this.$router
 
-Vue3 では"vue"から useRoute と useRouter 関数をインポートして使用する。useRoute は Vue2 の this.$route、useRouterはVue2のthis.$router に対応している。
+Vue3 では"vue"から useRoute と useRouter 関数をインポートして使用する。useRoute は this.$routeに、useRouterはthis.$router にそれぞれ対応している。
 
 ```js
+<template>
+  <router-view></router-view>
+  <button v-on:click="returnHome">Home</button>
+</template>
+
 <script>
 import { useRoute, useRouter } from "vue-router"
 
@@ -132,6 +139,7 @@ export default {
     const route = useRoute()
 
     const returnHome = () => {
+      console.log(route.path) // 現在のpathを表示
       router.push("/") // ルートに移動
     }
 
