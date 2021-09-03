@@ -2,6 +2,8 @@
 
 SPA(Single Page Application)では、URL に応じて表示するコンポーネントを切り替えるルーティングと呼ばれる機能がほぼ必須になる。Vue では [Vue Router](https://next.router.vuejs.org) がその公式のプラグインだ。
 
+Vue Router(V.4)の基本的な使い方を紹介する。
+
 Vue3 に対応している Vue Router は、バージョン 4 以上のものなので、ネットを調べるときはバージョンに注意する。
 
 ## インストール
