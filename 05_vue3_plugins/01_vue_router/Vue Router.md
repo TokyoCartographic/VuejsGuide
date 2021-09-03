@@ -2,6 +2,8 @@
 
 SPA(Single Page Application)では、URL に応じて表示するコンポーネントを切り替えるルーティングと呼ばれる機能がほぼ必須になる。Vue では [Vue Router](https://next.router.vuejs.org) がその公式のプラグインだ。
 
+Vue3 に対応している Vue Router は、バージョン 4 以上のものなので、ネットを調べるときはバージョンに注意する。
+
 ## インストール
 
 **Vue-cli** で vue-router を選択すれば、Vue Router はインストールされ、初期設定ファイルも作成される。
@@ -22,7 +24,8 @@ yarn add vue-router@4
 
 ## URL とコンポーネントのマッピング
 
-src フォルダの router フォルダ内の index.js に URL とコンポーネントの設定を記述する。（router フォルダが存在しないときは作成する）
+src フォルダの router フォルダ内の ルート定義 index.js に URL とコンポーネントの設定を記述する。（Vite で開始したときは src/router フォルダも index.js も存在しないので作成する）
+ルート定義の書き方も Vue2 のときとすこし変更されている。
 
 ```js
 import { createRouter, createWebHistory } from "vue-router"
@@ -55,6 +58,8 @@ export default router
 
 ## Vue Router の有効化
 
+ルート定義は、main.js で読み込み有効化する。
+
 ```js
 import { createApp } from "vue"
 import App from "./App.vue"
@@ -63,7 +68,7 @@ import router from "./router" // <--ここに注目
 createApp(App).use(router).mount("#app")
 ```
 
-`import router from "./router"`は、先に作成した router/index.js がエクスポートしたオブジェクトをインポートすることを意味する。また最後の一行は以下と同じ意味だ。
+`import router from "./router"`は、先に作成した router/index.js がエクスポートしたオブジェクトをインポートすることを意味する。また最後の１行は以下３行と同じ意味だ。
 
 ```js
 const app = createApp(App)
@@ -110,7 +115,12 @@ app.mount("#app")
 
 ## その他
 
-ルーティングはプログラムからも行うことができる。"vue"から useRoute と useRouter 関数をインポートして使用する。useRoute は Vue2 の this.$route、useRouterはVue2のthis.$router に対応している。
+ルーティングは Vue2 のときと同様プログラムからも行うことができる。Vue2 のときは以下のオブジェクトを利用した。
+
+- this.$route
+- this.$router
+
+Vue3 では"vue"から useRoute と useRouter 関数をインポートして使用する。useRoute は Vue2 の this.$route、useRouterはVue2のthis.$router に対応している。
 
 ```js
 <script>
