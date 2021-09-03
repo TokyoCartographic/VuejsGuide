@@ -119,10 +119,10 @@ app.mount("#app")
 
 ルーティングは Vue2 のときと同様プログラムからも行うことができる。Vue2 のときは以下のオブジェクトを利用した。
 
-- this.$route
-- this.$router
+- this.$route （Vue 内の vue-router インスタンス）
+- this.$router （Vue 内の vue-router 各種パラメータ）
 
-Vue3 では"vue"から useRoute と useRouter 関数をインポートして使用する。useRoute は this.$routeに、useRouterはthis.$router にそれぞれ対応している。
+Vue3 では"vue"から useRoute と useRouter 関数をインポートして使用する。`useRoute` は `this.$route`に、`useRouter`は`this.$router` にそれぞれ対応（関連）している。
 
 ```js
 <template>
@@ -140,7 +140,7 @@ export default {
 
     const returnHome = () => {
       console.log(route.path) // 現在のpathを表示
-      router.push("/") // ルートに移動
+      router.push("/") // pushメソッドで引数のルートに移動
     }
 
     return {
