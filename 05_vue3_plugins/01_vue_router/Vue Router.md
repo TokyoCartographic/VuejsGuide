@@ -122,7 +122,7 @@ app.mount("#app")
 - this.$route （Vue 内の vue-router インスタンス）
 - this.$router （Vue 内の vue-router 各種パラメータ）
 
-Vue3 では"vue"から useRoute と useRouter 関数をインポートして使用する。`useRoute` は `this.$route`に、`useRouter`は`this.$router` にそれぞれ対応（関連）している。
+Vue3 では vue から **useRoute** と **useRouter** 関数をインポートして使用する。`useRoute` は `this.$route`に、`useRouter`は`this.$router` にそれぞれ対応（関連）している。
 
 ```js
 <template>
