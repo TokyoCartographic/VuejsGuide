@@ -25,7 +25,7 @@ state の更新を行う。mutation はいっさい非同期の処理は行わ�
 
 ## インストール
 
-Vue-cli で vuex を選択した場合は、Vue のバージョンに合う Vuex がインストールされ、初期化データが格納される。Vite でプロジェクトを作成した場合は自分でインストールする。
+**Vue-cli** で **Vuex** を選択した場合は、Vue のバージョンに合う Vuex がインストールされ、初期化データが格納される。**Vite** でプロジェクトを作成した場合は自分でインストールする。
 
 npm の場合
 
@@ -41,7 +41,7 @@ yarn add vuex@4
 
 # ストアの作成
 
-Vue-cli で開始した場合は以下のソース src/store/index.js が作成される。Vite で開始したときは以下のソースを作成する。
+**Vue-cli** で開始した場合は以下のソース src/store/index.js が作成される。**Vite** で開始したときはまず以下のソースを作成する。
 
 ```js
 import { createStore } from "vuex"
@@ -54,18 +54,17 @@ export default createStore({
 })
 ```
 
-Vue3 では、やはり vue から createStore 関数をインポートしてそれを使ってストアを作成している。
-ストアオブジェクトの中に、Vuex の主要なキーワードをキーとするオブジェクトがあることが見てとれる。modules は、Vuex の各データを分割して格納するためのもの。
+**Vue3** では、やはり vue から **createStore** 関数をインポートしてそれを使ってストアを作成している。
+ストアオブジェクト初期化の引数の中に、Vuex の主要なキーワードをキーとするオブジェクトがあることが見てとれる。modules は、Vuex の各データを分割して格納するためのもの。
 
 ## Vuex の有効化
 
-Vuex の有効化はやはりエントリーポイントファイルの main.js で行われる。
+Vuex の有効化はやはりエントリーポイントファイルの **main.js** で行われる。
 
 ```js
 import { createApp } from "vue"
 import App from "./App.vue"
-import store from "./store"
-
+import store from "./store" // <--
 createApp(App).use(store).mount("#app")
 ```
 
