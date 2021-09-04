@@ -63,8 +63,8 @@ const { person: newPerson } = { person }
 console.log(newPerson.name)
 ```
 
-2. もうひとつの疑問: filterValue は setup オプション内では、useTextFilter 関数の戻り値が格納される変数としてだけ存在している。その filterValue が`<template>`内で v-model="filterValue"として設定されていて、`<input>`の値が変化すると useTextFilter が作動し Todo リストは正しく抽出される。useTextFilter の引数には filterValue は渡っていないのにどうして正しく動いているのか。
+2. もうひとつの疑問: filterValue は setup オプション内では、useTextFilter 関数の戻り値が格納される変数としてだけ存在している。その filterValue が`<template>`内で v-model="filterValue"として設定されていて、`<input>`の値が変化すると useTextFilter が作動し Todo リストは正しく抽出される。useTextFilter の引数には filterValue は渡っていないのにどうして正しく動くのか。
 
-setup 関数内で実行される useTextFilter 関数の中で、filterValue が ref 関数で ref オブジェクトとして宣言されて、リターンされている。関数の戻り値として受け取られた filterValue は setup 関数からリターンされ、`<template>`内で v-model で利用可能となっている。v-model で双方向にバインドされた filterValue はリアクティブ性をもつため、useTextFilter の中での ToDo リストのフィルタリングのキーとして有効となる。
+setup 関数内で実行される useTextFilter 関数の中で、filterValue が ref 関数で ref オブジェクトとして宣言されて、リターンされている。関数の戻り値として受け取られた filterValue は setup 関数からリターンされ、`<template>`内で v-model="filterValue" として使用されている。v-model で双方向にバインドされた filterValue はリアクティブ性をもつため、useTextFilter 関数 の中での ToDo リストのフィルタリングのキーとして有効となる。
 
 以上
