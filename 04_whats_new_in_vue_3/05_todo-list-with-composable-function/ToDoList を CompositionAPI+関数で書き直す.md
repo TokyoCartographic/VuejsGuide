@@ -96,7 +96,7 @@ export const todoItemCount = (items) => {
 }
 ```
 
-todoItemCount を import 後に setup 関数内に以下のコードを追加
+todoItemCount.js を import 後に setup 関数内に以下のコードを追加
 
 ```js
 setup () {
@@ -105,6 +105,8 @@ setup () {
 }
 ```
 
-dev サーバを起動して画面で操作してみると、Todo が変化するたびに todoItemCount がリアクティブに変化することが確認できる。
+dev サーバを起動して画面で操作してみると、Todo のリストが変化するたびに todoCount がリアクティブに変化することが確認できる。
+
+ついでにというか、Todo の削除が削除されたときに todoCount が低減するか確認するため Todo 削除機能も追加した（ToDoList_test.vue）。
 
 以上
