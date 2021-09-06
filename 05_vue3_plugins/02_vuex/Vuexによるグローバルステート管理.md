@@ -3,6 +3,7 @@
 [**Vuex**](https://next.vuex.vuejs.org/ja/index.html)は、アプリーケーション内の複数のページにまたがって利用されるステート（データ）を集中的に管理するためのプラグインだ。データの流れを明確にカテゴリー分けして整合性を保証している。（**Facebook** の **Flux**, **Redux** のアイデアを Evan さんがパクった？いや参考にしたもの。）
 
 **Vue3**対応の**Vuex**はバージョン 4 以降となる。
+Vuex は TypeScript との相性があまりよくないということが言われている。
 
 ![vuex概念図](vuex.png)
 
@@ -39,7 +40,7 @@ yarn の場合
 yarn add vuex@4
 ```
 
-# ストアの作成
+## ストアの作成
 
 **Vue-cli** で開始した場合は以下のソース src/store/index.js が作成される。**Vite** で開始したときはまず以下のソースを作成する。
 
@@ -64,10 +65,31 @@ Vuex の有効化はやはりエントリーポイントファイルの **main.j
 ```js
 import { createApp } from "vue"
 import App from "./App.vue"
-import store from "./store" // <--
+import store from "./store" // <-- ここ
 createApp(App).use(store).mount("#app")
 ```
 
 Vue のインスタンスは src/store/index.js から返されたインスタンスを取り込んでいる。
+
+## ミニマルな構成
+
+Vuex の仕組みを最低限のものとして利用するときは以下のようなる。
+
+### ミニマルなストア
+
+src/store/index.js を以下の内容で作成する。
+
+```js
+import { createStore } from "vuex"
+const store = createStore({
+  state: {
+    users: []
+  }
+})
+```
+
+ここでは[]で初期化されたステート users が定義されている。
+
+### コンポーネントからのストアの参照
 
 以上
