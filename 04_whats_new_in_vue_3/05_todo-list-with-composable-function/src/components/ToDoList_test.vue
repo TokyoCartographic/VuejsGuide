@@ -40,6 +40,7 @@ export default {
     // ToDoの追加関連の定義
     const inputValue = ref("")
     const handleClick = () => {
+      // 追加ToDo欄空のときは何もしない
       if (!inputValue.value) {
         return
       }
@@ -49,11 +50,9 @@ export default {
     }
     // Todoの削除
     const deleteToDo = (id) => {
-      console.log("delete: " + id)
       const delIndex = todoItems.findIndex((item) => {
         return item.id === id
       })
-      console.log("index:" + delIndex)
       if (delIndex > -1) {
         todoItems.splice(delIndex, 1)
       }
