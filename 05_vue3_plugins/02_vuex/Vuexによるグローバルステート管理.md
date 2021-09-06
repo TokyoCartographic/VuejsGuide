@@ -126,7 +126,7 @@ const users = computed(() => store.state.users)
 
 ### ストアデータの更新
 
-Vuex では、state データを直接編集できない。というかわざわざ直接編集できない仕組みにしている。mutations に定義された関数からのみデータの更新は許される。
+Vuex では、state データを直接編集できない。というかわざわざ直接編集できない仕組みにしている。mutations に定義された関数からのみデータの更新は許される。src/store/index.js の mutaitions に関数 addUser を追加する。
 
 ```js
   mutations: {
@@ -138,13 +138,15 @@ Vuex では、state データを直接編集できない。というかわざわ
 
 mutation 関数の第１引数は必ず state でなければならない。上の例の addUser 関数では、第１引数は state で第２引数は更新用オブジェクト payload になっている。
 
-コンポーネントから mutation 関数を呼び出すには、store オブジェクトの commit メソッドを使う。
+コンポーネントから mutation 関数を呼び出すには、store オブジェクトの commit メソッドを使う。setup 関数内に関数 addUser を定義する。
 
 ```es6
 const addUser = () => store.commit("addUser", { user: "user" + count.value })
 ```
 
 この関数は、store の commit メソッド実行する。第１引数は mutation 関数名で、第２引数は更新用オブジェクトになっている。
+
+ボタンがクリックされ addUser 関数によりストアの state.users が更新されると、そのデータを参照しているコンポーネントの users と count が更新され表示数、ユーザリストの表示も更新される。
 
 ### setup 内のもうひとつの記法
 
@@ -163,6 +165,6 @@ export default {
 }
 ```
 
-こっちのほうが簡潔に書けて良さそうだ。ところが、上記の count だけはエラーになってしまった。エラーの原因が判明したらこちらの記法を使いたい。
+こっちのほうが簡潔で良さそうだ。ところが、上記の count だけはエラーになってしまった。エラーの原因が判明したらこちらの記法を使いたい。
 
 以上
