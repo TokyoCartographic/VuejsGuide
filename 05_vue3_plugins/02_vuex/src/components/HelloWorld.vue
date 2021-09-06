@@ -1,26 +1,22 @@
 <script>
-import { ref, computed } from "vue"
+import { computed } from "vue"
 import { useStore } from "vuex"
 export default {
-  setup(props) {
+  setup() {
     const store = useStore()
-    const users = computed(() => {
-      return store.state.users.length
-    })
-    const count = computed(() => {
-      return store.state.users.length
-    })
-    const addUser = () => {
+    const users = computed(() => store.state.users)
+    const count = computed(() => store.state.users.length)
+    const addUser = () =>
       store.commit("addUser", { user: "user" + count.value })
-    }
+
     return {
       users,
       count,
       addUser
       /*
-      users: computed(() => store.state.users),
-      count: computed(() => store.state.users.length),
-      addUser: () => store.commit("addUser", { user: "user" + count.value })
+      users: computed(() => store.state.users), // OK
+      count: computed(() => store.state.users.length), // NG
+      addUser: () => store.commit("addUser", { user: "user" + count.value }) // OK
       */
     }
   }
@@ -32,7 +28,7 @@ export default {
   <p>user counts: {{ count }}</p>
   <button @click="addUser">addUser</button>
   <ul>
-    <li v-for="user in users">{{ user }}</li>
+    <li v-for="(user, index) in users" :key="index">{{ user }}</li>
   </ul>
 </template>
 
