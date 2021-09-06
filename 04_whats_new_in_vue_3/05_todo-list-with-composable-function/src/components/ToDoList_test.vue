@@ -35,12 +35,7 @@ export default {
       { id: 1, done: false, text: "Go out to sea" },
       { id: 2, done: false, text: "Invite the first member" }
     ])
-    /*
     // ToDoリストの件数
-    const todoCount = computed(() => {
-      return todoItems.length
-    })
-    */
     const todoCount = todoItemCount(todoItems)
     // ToDoの追加関連の定義
     const inputValue = ref("")
@@ -69,7 +64,12 @@ export default {
       todoItems,
       (todo) => todo.text
     )
-
+    /* これでは動作しない
+    const { filterValue, filteredTodoItems } = useTextFilter(
+      todoItems,
+      (todo) => todo.text
+    )
+    */
     return {
       inputValue,
       filterValue,
