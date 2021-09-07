@@ -258,6 +258,12 @@ export default {
 }
 ```
 
+## ストアのモジュール分割
+
+参考サイトは、理解しやすいよう store/index.js ひとつでストアを作成していた。しかし先に述べたように肥大化しがちなストアを Vuex 本家にならって modules 分割を試みる。
+
+（work in progress）
+
 ## 参照
 
 - [Vuex 本家サンプル](https://github.com/vuejs/vuex/tree/4.0/examples/composition)
