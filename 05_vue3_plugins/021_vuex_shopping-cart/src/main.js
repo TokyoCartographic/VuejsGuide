@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+// import App from './App.vue.org'
 import store from './store'
-import { currency } from './libs/currency.js'
+// import { currency } from './libs/currency.js'
 import "./assets/global.css"
 
-const app = createApp(App)
-app.use(store)
-app.mount('#app')
+createApp(App).use(store).mount('#app')
