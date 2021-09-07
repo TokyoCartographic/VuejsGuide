@@ -186,7 +186,7 @@ export default {
       <i>Please add some products to cart.</i>
     </p>
     <ul>
-      <li v-for="product in cartProducts" :key="product.id">
+      <li v-for="product in cartProducts" v-bind:key="product.id">
         {{ product.title }} - {{ product.price }} x {{ product.quantity }}
       </li>
     </ul>
@@ -200,16 +200,15 @@ import { useStore } from "vuex"
 export default {
   setup() {
     const store = useStore()
-    const cartProducts = computed(() => store.getters.cartProducts)
     return {
-      cartProducts
+      cartProducts: computed(() => store.getters.cartProducts)
     }
   }
 }
 </script>
 ```
 
-ここで参考サイトは、下の例のように computed オプションと mapGetters を使っていた。Composition API では上のようになる。
+ここで参考サイトでは、下の例のように computed オプションと getters のユーティリティ関数 mapGetters を使っていた。Composition API では上のようになる。
 
 ```js
 import { mapGetters } from "vuex"

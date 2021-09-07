@@ -19,11 +19,15 @@ import { useStore } from "vuex"
 export default {
   setup() {
     const store = useStore()
-    const cartProducts = computed(() => store.getters.cartProducts)
-
     return {
-      cartProducts
+      cartProducts: computed(() => store.getters.cartProducts)
     }
   }
 }
 </script>
+
+<style scoped>
+h2 {
+  color: coral;
+}
+</style>

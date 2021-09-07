@@ -15,9 +15,9 @@ import ShoppingCart from "./components/ShoppingCart.vue"
 
 <style scoped>
 h1 {
-  color: darkblue;
+  color: mediumblue;
 }
 h2 {
-  color: dimgray;
+  color: gray;
 }
 </style>
