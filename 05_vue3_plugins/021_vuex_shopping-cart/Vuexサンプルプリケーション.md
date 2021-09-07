@@ -218,7 +218,7 @@ export default {
 
 ### ショッピングカート components/ShoppingCart.vue
 
-購買候補リスト
+購買候補リストは store.getters で取得した cartProducts を表示する。
 
 ```js
 <template>

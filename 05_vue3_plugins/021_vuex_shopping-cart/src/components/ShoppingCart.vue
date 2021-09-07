@@ -2,13 +2,20 @@
   <div class="cart">
     <h2>Your Cart</h2>
     <p v-show="!cartProducts.length">
-      <i>Please add some products to cart.</i>
+      <i class="message">Please add some products to cart.</i>
     </p>
     <ul>
       <li v-for="product in cartProducts" v-bind:key="product.id">
         {{ product.title }} - {{ product.price }} x {{ product.quantity }}
       </li>
     </ul>
+    <p>Total: {{ cartTotalPrice }}</p>
+    <div>
+      <button :disabled="!cartProducts.length" @click="checkout(cartProducts)">
+        Checkout
+      </button>
+      <p v-show="checkoutStatus">Checkout {{ checkoutStatus }}.</p>
+    </div>
   </div>
 </template>
 
@@ -20,7 +27,10 @@ export default {
   setup() {
     const store = useStore()
     return {
-      cartProducts: computed(() => store.getters.cartProducts)
+      cartProducts: computed(() => store.getters.cartProducts),
+      cartTotalPrice: computed(() => store.getters.cartTotalPrice),
+      checkoutStatus: computed(() => store.state.checkoutStatus),
+      checkout: (products) => store.dispatch("checkout", products)
     }
   }
 }
@@ -29,5 +39,12 @@ export default {
 <style scoped>
 h2 {
   color: coral;
+}
+p {
+  font-weight: bold;
+}
+.message {
+  color: dimgray;
+  font-weight: normal;
 }
 </style>

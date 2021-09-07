@@ -2,7 +2,11 @@
   <ul>
     <li class="products" v-for="product in products" v-bind:key="product.id">
       {{ product.title }} - {{ product.price }}
-      <button class="buy-btn" @click="addProductToCart(product)">
+      <button
+        :disabled="!product.inventory"
+        class="buy-btn"
+        @click="addProductToCart(product)"
+      >
         Add to cart
       </button>
     </li>
