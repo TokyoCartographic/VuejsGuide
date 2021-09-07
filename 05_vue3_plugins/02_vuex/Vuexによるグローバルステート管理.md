@@ -56,7 +56,7 @@ export default createStore({
 ```
 
 **Vue3** では、やはり vue から **createStore** 関数をインポートしてそれを使ってストアを作成している。
-ストアオブジェクト初期化の引数の中に、Vuex の主要なキーワードをキーとするオブジェクトがあることが見てとれる。modules は、Vuex の各データを分割して格納するためのもの。
+ストアオブジェクト初期化の引数の中に、Vuex の主要なキーワードをキーとするオブジェクトがあることが見てとれる。modules は、ストアの構造をカテゴリごとに分割して整理して記述するためのもの。
 
 ## Vuex の有効化
 
@@ -92,7 +92,7 @@ const store = createStore({
 
 ### コンポーネントからのストアの参照
 
-ストアを参照するときは、**vuex** から **useStore** 関数を import し、**vue** から **computed** 関数を import する。
+HelloWorld コンポーネントからストアを参照するときは、**vuex** から **useStore** 関数を import し、**vue** から **computed** 関数を import する。
 
 ```js
 <script>
@@ -102,10 +102,9 @@ export default {
   setup() {
     const store = useStore()
     const users = computed(() => store.state.users)
-    const count = computed(() => store.state.users.length)
+    const count = computed(() => store.getters.count)
     const addUser = () =>
       store.commit("addUser", { user: "user" + count.value })
-
     return {
       users,
       count,
@@ -148,6 +147,8 @@ const addUser = () => store.commit("addUser", { user: "user" + count.value })
 
 ボタンがクリックされ addUser 関数によりストアの state.users が更新されると、そのデータを参照しているコンポーネントの users と count が更新され表示数、ユーザリストの表示も更新される。
 
+ここでひとつの疑問、Vuex の基本原則ではストアデータの更新は Actions を経由するのではなかったか？このサンプルではコンポーネントから mutation 関数を commit している。これでよいのか。非同期処理がはさまらないときは dispatch で action 関数を呼び出さなくても良いということなのか？
+
 ### setup 内のもうひとつの記法
 
 [Vuex4 本家のページ](https://next.vuex.vuejs.org/ja/guide/composition-api.html#%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%81%A8%E3%82%B2%E3%83%83%E3%82%BF%E3%83%BC%E3%81%B8%E3%81%AE%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9)を見たところ、setup 関数内の記述法があった。
@@ -158,7 +159,8 @@ export default {
     const store = useStore()
     return {
       users: computed(() => store.state.users), // OK
-      count: computed(() => store.state.users.length), // NG
+      // count: computed(() => store.state.users.length), // NG
+      count: computed(() => store.getters.count), // NG
       addUser: () => store.commit("addUser", { user: "user" + count.value }) // OK
     }
   }
@@ -166,5 +168,28 @@ export default {
 ```
 
 こっちのほうが簡潔で良さそうだ。ところが、上記の count だけはエラーになってしまった。エラーの原因が判明したらこちらの記法を使いたい。
+ところでこの場合 count は、ストアのほうにユーザ数を返す getters を設定するのが標準的な解決法だ。まず store/index.js に count を設定する。
+
+```js
+getters: {
+  count: (state) => state.users.length
+}
+```
+
+ところがまだ count が undefined というエラーがでる。そこで count は return の前に移動したところようやく期待どおりに動いた。
+
+```js
+export default {
+  setup() {
+    const store = useStore()
+    const count = computed(() => store.getters.count)
+    return {
+      count,
+      users: computed(() => store.state.users),
+      addUser: () => store.commit("addUser", { user: "user" + count.value })
+    }
+  }
+}
+```
 
 以上

@@ -5,7 +5,7 @@
       <i>Please add some products to cart.</i>
     </p>
     <ul>
-      <li v-for="product in cartProducts" :key="product.id">
+      <li v-for="product in cartProducts" v-bind:key="product.id">
         {{ product.title }} - {{ product.price }} x {{ product.quantity }}
       </li>
     </ul>

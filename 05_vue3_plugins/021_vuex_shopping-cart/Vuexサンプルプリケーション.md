@@ -1,17 +1,17 @@
 # Vuex サンプルプリケーション
 
-**Vuex** のもうすこし本格的な使用例がないかなと探したところ、灯台下暗しで本家にサンプルがいくつかあった。そのなかのショッピングカートのサンプルをコピーして動かそうとしたらサーバーとの連携もあるみたいでうまくゆかない。他をあたろうとしたところ、ネット上でこのソースを元にサーバなしで動かして紹介しているサイトがあった。それを参考にさせていただくことにした。ただしこのサイトでは Options API を使っているので、一歩一歩 Composition API への置き換えつつなるべく本家ソースもできれば活かすよう試みる（勉強になる～）。
+**Vuex** のもうすこし本格的な使用例がないかなと探したところ、灯台下暗しで本家にサンプルがいくつかあった。そのなかのショッピングカートのサンプルをコピーして動かそうとしたらサーバーとの連携もあるみたいでうまくゆかない。他をあたろうとしたところ、ネット上でこのソースを元にサーバなしで動かして紹介しているサイトがあった。それを参考にさせていただくことにした。ただしそのサイトでは Options API を使っているので、一歩一歩 Composition API への置き換えつつできれば本家のソースも活かすよう試みる（勉強になる～）。
 
 ## プロジェクトフォルダの作成
 
-GitHub にあるものは、普通はソースをダウンロードし、解凍したフォルダで yarn（または npm install）すればそれで OK という場合が多いが今回は諸事情によりそうもゆかないのでゼロから始める。
+普通 GitHub に公開されているものは、ソースをダウンロードし、解凍したフォルダで yarn（または npm install）すればそれで OK という場合が多いが今回は諸事情によりそうもゆかないことがわかったのでゼロから始める。
 
 ```shell
 npm init vite
 :
 cd 021_vuex_shopping-cart
 yarn
-yarn add vuex@4.0.2 // 現在の最新バージョン
+yarn add vuex@4.0.2 // 現時点の最新バージョン
 ```
 
 これで必要なモジュールは揃った。あとは少しづつ本家の Composition API のソースと参考サイトのソースを取り込んでゆく。
@@ -34,7 +34,7 @@ createApp(App).use(store).mount("#app")
 
 ### store/index.js
 
-ストアオブジェクトの構成は本家サンプルでは modules を使ったものになっている。
+ストアオブジェクトの構成は本家サンプルでは modules を使ったより複雑なものになっている。
 
 ```
 > store
@@ -44,7 +44,7 @@ createApp(App).use(store).mount("#app")
        products.js
 ```
 
-しかし今のところは以下の空の index.js にしておく。
+ストアは必ず後から肥大化するので最初から modules を使うべきという人もいる。しかし今のところは以下の空の index.js にしておく。
 
 ```js
 import { createStore } from "vuex"
@@ -79,7 +79,7 @@ import ShoppingCart from "./components/ShoppingCart.vue"
 
 ### src/api/shop.js
 
-商品のデータと購買処理関数を持つデータ shop.js を準備する。
+今回はサーバを使わないので、商品のデータと購買処理関数を shop.js に準備する。
 
 ```js
 /**
@@ -115,22 +115,64 @@ export default {
 ```js
 export default createStore({
   state: {
-    products: []
+    products: [],
+    items: []
   },
   mutations: {
     setProducts(state, products) {
       state.products = products
+    },
+    pushProductToCart(state, product) {
+      state.items.push({
+        id: product.id,
+        quantity: 1
+      })
+    },
+    incrementItemQuantity(state, { id }) {
+      const cartItem = state.items.find((item) => item.id === id)
+      cartItem.quantity++
+    },
+    decrementProductIventory(state, { id }) {
+      const product = state.products.find((product) => product.id === id)
+      product.inventory--
     }
   },
   actions: {
-    getAllProducts(context) {
+    getAllProducts({ commit }) {
       shop.getProducts((products) => {
-        context.commit("setProducts", products)
+        commit("setProducts", products)
+      })
+    },
+    addProductToCart({ state, commit }, product) {
+      const cartItem = state.items.find((item) => item.id === product.id)
+      if (!cartItem) {
+        commit("pushProductToCart", product)
+      } else {
+        commit("incrementItemQuantity", cartItem)
+      }
+      commit("decrementProductIventory", product)
+    }
+  },
+  getters: {
+    cartProducts: (state) => {
+      return state.items.map((item) => {
+        const product = state.products.find((product) => product.id === item.id)
+        return {
+          title: product.title,
+          price: product.price,
+          quantity: item.quantity
+        }
       })
     }
   }
 })
 ```
+
+**mutations**, **actions**など Vuex のメインのキーの他に**getters**というキーがある。
+**getters**は以下を目的としている。
+
+- ストアの算出プロパティ（集計、フィルタリングなど）
+- ストアへの唯一のアクセスパスとして使う
 
 ### 商品リスト components/ProductList.vue
 
@@ -155,11 +197,9 @@ export default {
   setup() {
     const store = useStore()
     store.dispatch("getAllProducts")
-    const products = computed(() => {
-      return store.state.products
-    })
     return {
-      products
+      products: computed(() => store.state.products),
+      addProductToCart: (product) => store.dispatch("addProductToCart", product)
     }
   }
 }
@@ -173,6 +213,8 @@ export default {
 }
 </style>
 ```
+
+上の例では、store を取得したあとに action 関数**getAllProducts**を呼び出している。またボタンが押されたとき、store の action 関数**addProductToCart**を呼び出している。
 
 ### ショッピングカート components/ShoppingCart.vue
 
@@ -196,7 +238,6 @@ export default {
 <script>
 import { computed } from "vue"
 import { useStore } from "vuex"
-
 export default {
   setup() {
     const store = useStore()
@@ -208,11 +249,10 @@ export default {
 </script>
 ```
 
-ここで参考サイトでは、下の例のように computed オプションと getters のユーティリティ関数 mapGetters を使っていた。Composition API では上のようになる。
+ここで参考サイトでは、下の例のように computed オプションと getters のユーティリティ関数 mapGetters を使っていた。Composition API では上のようになる。Composition API のときこれが**store.getters**を使うときの標準的な記法になる。
 
 ```js
 import { mapGetters } from "vuex"
-
 export default {
   computed: mapGetters(["cartProducts"])
 }

@@ -4,20 +4,11 @@ import { useStore } from "vuex"
 export default {
   setup() {
     const store = useStore()
-    const users = computed(() => store.state.users)
-    const count = computed(() => store.state.users.length)
-    const addUser = () =>
-      store.commit("addUser", { user: "user" + count.value })
-
+    const count = computed(() => store.getters.count)
     return {
-      users,
       count,
-      addUser
-      /*
-      users: computed(() => store.state.users), // OK
-      count: computed(() => store.state.users.length), // NG
-      addUser: () => store.commit("addUser", { user: "user" + count.value }) // OK
-      */
+      users: computed(() => store.state.users),
+      addUser: () => store.commit("addUser", { user: "user" + count.value })
     }
   }
 }

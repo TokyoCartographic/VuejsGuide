@@ -16,15 +16,9 @@ export default {
   setup() {
     const store = useStore()
     store.dispatch("getAllProducts")
-    const products = computed(() => {
-      return store.state.products
-    })
-    const addProductToCart = (product) => {
-      store.dispatch("addProductToCart", product)
-    }
     return {
-      products,
-      addProductToCart
+      products: computed(() => store.state.products),
+      addProductToCart: (product) => store.dispatch("addProductToCart", product)
     }
   }
 }
