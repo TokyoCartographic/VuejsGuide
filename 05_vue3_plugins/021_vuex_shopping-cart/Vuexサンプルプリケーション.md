@@ -264,7 +264,7 @@ export default {
 
 ### store/index.jsの変更（１）
 
-単独の**index.js**のときは、ストアの定義とオブジェクトの作成がすべてその中で行われたが、vuexのプロパティをカテゴリ別のファイルに分離する（ここでは**products.js**と**cart.js**）。
+単独の**index.js**のときは、ストアの定義とオブジェクトの作成がすべてその中で行われたが、vuexの各プロパティ（state, mutations, actions, getters）をカテゴリ別のファイルに分離する（ここでは**products.js**と**cart.js**）。
 
 商品関連のステートデータは**modules/products.js**に格納する。
 
@@ -307,6 +307,8 @@ export default {
   mutations
 }
 ```
+
+最後に**namespaced**プロパティを**true**にした上で、各プロパティをexportする。
 
 ショッピングカート関連のデータは**modules/cart.js**に格納する。
 
@@ -398,9 +400,11 @@ export default {
 }
 ```
 
+こちらもproducts.js同様に各プロパティをexportしている。
+
 ### store/index.jsの変更 （２）
 
-分割して作成したストアデータを使用するように以下のように**index.js**を修正する。
+次に分割して作成したストアデータを使用するように**index.js**を修正する。
 
 ```js
 import { createStore, createLogger } from 'vuex'
@@ -432,7 +436,7 @@ const all = computed(() => store.state.products.all)
 store.dispatch("products/getAllProducts")
 ```
 
-- getters (ストアのcomputed的役割をもつものをgettersに設定したもの)
+- getters (gettersにストアのcomputed的役割をもたせて設定されたもの)
 
 ```js
 const cartProducts = computed(() => store.getters["cart/cartProducts"])
