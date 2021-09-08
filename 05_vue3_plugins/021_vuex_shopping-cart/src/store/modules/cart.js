@@ -1,4 +1,4 @@
-import shop from "../../api/shop"
+import shop from '../../api/shop'
 
 // initial state
 // shape: [{ id, quantity }]
@@ -9,27 +9,13 @@ const state = {
 
 // getters
 const getters = {
-  /*
   cartProducts: (state, getters, rootState) => {
     return state.items.map(({ id, quantity }) => {
-      const product = rootState.products.all.find(
-        (product) => product.id === id
-      )
+      const product = rootState.products.all.find(product => product.id === id)
       return {
         title: product.title,
         price: product.price,
         quantity
-      }
-    })
-  },
-  */
-  cartProducts: (state, getters, rootState) => {
-    return state.items.map(item => {
-      const product = rootState.products.products.find((product) => product.id === item.id)
-      return {
-        title: product.title,
-        price: product.price,
-        quantity: item.quantity
       }
     })
   },
@@ -43,58 +29,56 @@ const getters = {
 
 // actions
 const actions = {
-  checkout({ commit, state }, products) {
+  checkout ({ commit, state }, products) {
     const savedCartItems = [...state.items]
-    commit("setCheckoutStatus", null)
+    commit('setCheckoutStatus', null)
     // empty cart
-    commit("setCartItems", { items: [] })
+    commit('setCartItems', { items: [] })
     shop.buyProducts(
       products,
-      () => commit("setCheckoutStatus", "successful"),
+      () => commit('setCheckoutStatus', 'successful'),
       () => {
-        commit("setCheckoutStatus", "failed")
+        commit('setCheckoutStatus', 'failed')
         // rollback to the cart saved before sending the request
-        commit("setCartItems", { items: savedCartItems })
+        commit('setCartItems', { items: savedCartItems })
       }
     )
   },
 
-  addProductToCart({ state, commit }, product) {
-    // commit('setCheckoutStatus', null)
-    // if (product.inventory > 0) {
-    const cartItem = state.items.find((item) => item.id === product.id)
-    if (!cartItem) {
-      // commit('pushProductToCart', { id: product.id })
-      commit("pushProductToCart", product)
-    } else {
-      commit("incrementItemQuantity", cartItem)
+  addProductToCart ({ state, commit }, product) {
+    commit('setCheckoutStatus', null)
+    if (product.inventory > 0) {
+      const cartItem = state.items.find(item => item.id === product.id)
+      if (!cartItem) {
+        commit('pushProductToCart', { id: product.id })
+      } else {
+        commit('incrementItemQuantity', cartItem)
+      }
+      // remove 1 item from stock
+      commit('products/decrementProductInventory', { id: product.id }, { root: true })
     }
-    // remove 1 item from stock
-    // commit('products/decrementProductInventory', { id: product.id }, { root: true })
-    commit("products/decrementProductInventory", product)
-    // }
   }
 }
 
 // mutations
 const mutations = {
-  pushProductToCart (state, product) {
+  pushProductToCart (state, { id }) {
     state.items.push({
-      id: product.id,
+      id,
       quantity: 1
     })
   },
 
-  incrementItemQuantity(state, { id }) {
-    const cartItem = state.items.find((item) => item.id === id)
+  incrementItemQuantity (state, { id }) {
+    const cartItem = state.items.find(item => item.id === id)
     cartItem.quantity++
   },
 
-  setCartItems(state, { items }) {
+  setCartItems (state, { items }) {
     state.items = items
   },
 
-  setCheckoutStatus(state, status) {
+  setCheckoutStatus (state, status) {
     state.checkoutStatus = status
   }
 }
