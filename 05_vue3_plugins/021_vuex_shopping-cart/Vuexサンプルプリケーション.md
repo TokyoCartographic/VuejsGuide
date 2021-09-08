@@ -425,18 +425,18 @@ export default createStore({
 クライアントコンポーネントから複数のモジュールに分割されたvuexの**action**関数、**getters**プロパティへの参照はシングルストアのときとはすこし異なる。
 store/index.jsの**modules**に設定したキーをaction関数名、gettersプロパティの前に付ける必要がある。
 
-- vuexのステートデータの参照（以前はすべてgetters経由で行っていたが、gettersの設定なしで取得する場合）
+- **vuexのステートデータの参照**（以前はすべてgetters経由で行っていたが、gettersの設定なしで取得する場合）
   
 ```js
 const all = computed(() => store.state.products.all)
 ```
-- Action
+- **Action**
 
 ```js
 store.dispatch("products/getAllProducts")
 ```
 
-- getters (gettersにストアのcomputed的役割をもたせて設定されたもの)
+- **getters** (gettersにストアのcomputed的役割をもたせて設定されたもの)
 
 ```js
 const cartProducts = computed(() => store.getters["cart/cartProducts"])
