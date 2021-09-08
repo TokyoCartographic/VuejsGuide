@@ -260,9 +260,187 @@ export default {
 
 ## ストアのモジュール分割
 
-参考サイトでは、理解しやすいよう store/index.js ひとつでストアを構成していた。しかし先に述べたように肥大化しがちなストアを Vuex 本家にならって modules 分割を試みる。
+参考サイトでは、理解しやすいよう store/index.js ひとつでストアを構成していた。しかし先に述べたように肥大化しがちなストアを Vuex 本家にならって **modules**への分割を試みる。ストアの分離は以下の手順を踏む。
 
-（work in progress）
+### store/index.jsの変更（１）
+
+単独の**index.js**のときは、ストアの定義とオブジェクトの作成がすべてその中で行われたが、vuexのプロパティをカテゴリ別のファイルに分離する（ここでは**products.js**と**cart.js**）。
+
+商品関連のステートデータはmodules/products.jsに格納する。
+
+```js
+import shop from '../../api/shop'
+
+// initial state
+const state = {
+  all: []
+}
+
+// getters
+const getters = {}
+
+// actions
+const actions = {
+  getAllProducts ({ commit }) {
+    shop.getProducts(products => {
+      commit('setProducts', products)
+    })
+  }
+}
+
+// mutations
+const mutations = {
+  setProducts (state, products) {
+    state.all = products
+  },
+  decrementProductInventory (state, { id }) {
+    const product = state.all.find(product => product.id === id)
+    product.inventory--
+  }
+}
+
+export default {
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+}
+```
+
+ショッピングカート関連のデータはmodules/cart.jsに格納する。
+
+```js
+// initial state
+// shape: [{ id, quantity }]
+const state = {
+  items: [],
+  checkoutStatus: null
+}
+
+// getters
+const getters = {
+  cartProducts: (state, getters, rootState) => {
+    return state.items.map(({ id, quantity }) => {
+      const product = rootState.products.all.find(product => product.id === id)
+      return {
+        title: product.title,
+        price: product.price,
+        quantity
+      }
+    })
+  },
+  cartTotalPrice: (state, getters) => {
+    return getters.cartProducts.reduce((total, product) => {
+      return total + product.price * product.quantity
+    }, 0)
+  }
+}
+
+// actions
+const actions = {
+  checkout ({ commit, state }, products) {
+    const savedCartItems = [...state.items]
+    commit('setCheckoutStatus', null)
+    // empty cart
+    commit('setCartItems', { items: [] })
+    shop.buyProducts(
+      products,
+      () => commit('setCheckoutStatus', 'successful'),
+      () => {
+        commit('setCheckoutStatus', 'failed')
+        // rollback to the cart saved before sending the request
+        commit('setCartItems', { items: savedCartItems })
+      }
+    )
+  },
+  addProductToCart ({ state, commit }, product) {
+    commit('setCheckoutStatus', null)
+    if (product.inventory > 0) {
+      const cartItem = state.items.find(item => item.id === product.id)
+      if (!cartItem) {
+        commit('pushProductToCart', { id: product.id })
+      } else {
+        commit('incrementItemQuantity', cartItem)
+      }
+      // remove 1 item from stock
+      commit('products/decrementProductInventory', { id: product.id }, { root: true })
+    }
+  }
+}
+
+// mutations
+const mutations = {
+  pushProductToCart (state, { id }) {
+    state.items.push({
+      id,
+      quantity: 1
+    })
+  },
+  incrementItemQuantity (state, { id }) {
+    const cartItem = state.items.find(item => item.id === id)
+    cartItem.quantity++
+  },
+  setCartItems (state, { items }) {
+    state.items = items
+  },
+  setCheckoutStatus (state, status) {
+    state.checkoutStatus = status
+  }
+}
+
+export default {
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+}
+```
+
+### store/index.jsの変更 （２）
+
+分割して作成したストアデータを使用するように以下のように**index.js**を修正する。
+
+```js
+import { createStore, createLogger } from 'vuex'
+import cart from './modules/cart'
+import products from './modules/products'
+export default createStore({
+  modules: {
+    cart,
+    products
+  },
+  strict: process.env.NODE_ENV !== "production",
+  plugins: [createLogger()]
+})
+```
+
+### コンポーネントからのアクセス
+
+クライアントコンポーネントからvuexの**action**関数、**getters**プロパティへの参照はシングルストアのときとはすこし異なる。
+store/index.jsの**modules**に設定したキーをaction関数名、gettersプロパティの前に付ける必要がある。
+
+- vuexのステートデータの参照（以前はgettersを使っていたが、gettersの設定なしで取得する場合）
+  
+```js
+const all = computed(() => store.state.products.all)
+```
+- Action
+
+```js
+store.dispatch("products/getAllProducts")
+```
+
+- getters (ストアのcomputed的役割をもつものをgettersに設定したもの)
+
+```js
+const cartProducts = computed(() => store.getters["cart/cartProducts"])
+```
+
+
+
+
 
 ## 参照
 
