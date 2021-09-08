@@ -260,13 +260,13 @@ export default {
 
 ## ストアのモジュール分割
 
-参考サイトでは、理解しやすいよう store/index.js ひとつでストアを構成していた。しかし先に述べたように肥大化しがちなストアを Vuex 本家にならって **modules**への分割を試みる。ストアの分離は以下の手順を踏む。
+参考サイトでは、理解しやすいよう store/index.js ストアをひとつにまとめていた。しかし先に述べたように、肥大化しがちなストアの分割は今後必須になるため、Vuex 本家にならって **modules**への分割を試みる。ストアの分離はおおむね以下の手順を踏む。
 
 ### store/index.jsの変更（１）
 
 単独の**index.js**のときは、ストアの定義とオブジェクトの作成がすべてその中で行われたが、vuexのプロパティをカテゴリ別のファイルに分離する（ここでは**products.js**と**cart.js**）。
 
-商品関連のステートデータはmodules/products.jsに格納する。
+商品関連のステートデータは**modules/products.js**に格納する。
 
 ```js
 import shop from '../../api/shop'
@@ -308,7 +308,7 @@ export default {
 }
 ```
 
-ショッピングカート関連のデータはmodules/cart.jsに格納する。
+ショッピングカート関連のデータは**modules/cart.js**に格納する。
 
 ```js
 // initial state
