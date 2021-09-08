@@ -27,10 +27,17 @@ export default {
   setup() {
     const store = useStore()
     return {
-      cartProducts: computed(() => store.getters.cartProducts),
-      cartTotalPrice: computed(() => store.getters.cartTotalPrice),
-      checkoutStatus: computed(() => store.state.checkoutStatus),
-      checkout: (products) => store.dispatch("checkout", products)
+      /*
+      cartProducts: computed(() => store.getters["cart/cartProducts"]),
+      cartTotalPrice: computed(() => store.getters["cart/cartTotalPrice"]),
+      checkoutStatus: computed(() => store.state.cart.checkoutStatus),
+      checkout: (products) => store.dispatch("cart/checkout", products)
+      */
+      cartProducts: computed(() => store.getters["shopping/cartProducts"]),
+      cartTotalPrice: computed(() => store.getters["shopping/cartTotalPrice"]),
+      checkoutStatus: computed(() => store.state.shopping.checkoutStatus),
+      checkout: (products) => store.dispatch("shopping/checkout", products)
+
     }
   }
 }

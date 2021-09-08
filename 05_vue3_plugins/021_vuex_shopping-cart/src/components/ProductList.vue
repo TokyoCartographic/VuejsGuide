@@ -19,10 +19,16 @@ import { useStore } from "vuex"
 export default {
   setup() {
     const store = useStore()
-    store.dispatch("getAllProducts")
+    // store.dispatch("products/getAllProducts")
+    store.dispatch("shopping/getAllProducts")
     return {
-      products: computed(() => store.state.products),
-      addProductToCart: (product) => store.dispatch("addProductToCart", product)
+      /*
+      products: computed(() => store.state.products.products),
+      addProductToCart: (product) => store.dispatch("cart/addProductToCart", product)
+      */
+      products: computed(() => store.state.shopping.products),
+      addProductToCart: (product) => store.dispatch("shopping/addProductToCart", product)
+
     }
   }
 }
