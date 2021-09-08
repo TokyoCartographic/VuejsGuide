@@ -418,7 +418,7 @@ export default createStore({
 
 ### コンポーネントからのアクセス
 
-クライアントコンポーネントからvuexの**action**関数、**getters**プロパティへの参照はシングルストアのときとはすこし異なる。
+クライアントコンポーネントから複数のモジュールに分割されたvuexの**action**関数、**getters**プロパティへの参照はシングルストアのときとはすこし異なる。
 store/index.jsの**modules**に設定したキーをaction関数名、gettersプロパティの前に付ける必要がある。
 
 - vuexのステートデータの参照（以前はgettersを使っていたが、gettersの設定なしで取得する場合）
