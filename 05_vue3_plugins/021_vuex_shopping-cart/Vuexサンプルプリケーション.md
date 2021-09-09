@@ -433,7 +433,7 @@ export default createStore({
 ### コンポーネントからのアクセス
 
 クライアントコンポーネントから複数のモジュールに分割された vuex の**action**関数、**getters**プロパティへの参照はシングルストアのときとはすこし異なる。
-store/index.js の**modules**に設定したキーを action 関数名、getters プロパティの前に付けて呼び出す（参照する）必要がある。components フォルダのソースは modules 対応に変更済になっている。
+store/index.js の**modules**に設定したキーを action 関数名、getters プロパティの前に付けて呼び出す（参照する）必要がある。components フォルダの SFC ソースは modules 対応に変更済になっている。
 
 #### **■ vuex のステートデータの参照**
 
