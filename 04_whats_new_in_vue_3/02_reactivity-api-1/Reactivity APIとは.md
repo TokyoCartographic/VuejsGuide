@@ -36,4 +36,26 @@ const num = ref(1)
 console.log(num.value)
 ```
 
+## isRef
+
+**isRef**は、引数が ref オブジェクトかチェックする。
+
+```js
+const robj = ref("A")
+console.log(isRef(robj)) // true
+```
+
+## toRefs
+
+**toRefs**は、引数のリアクティブオブジェクトのプロパティの値を ref オブジェクトに変換する。
+
+```js
+const state = reactive({
+  foo: 1
+})
+
+const stateAsRefs = toRefs(state)
+console.log(isRef(stateAsRefs.foo)) // true
+```
+
 以上
