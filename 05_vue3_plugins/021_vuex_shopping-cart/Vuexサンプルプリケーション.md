@@ -260,16 +260,16 @@ export default {
 
 ## ストアのモジュール分割
 
-参考サイトでは、理解しやすいよう store/index.js ストアをひとつにまとめていた。しかし先に述べたように、肥大化しがちなストアの分割は今後必須になるため、Vuex 本家にならって **modules**への分割を試みる。ストアの分離はおおむね以下の手順を踏む。
+参考サイトでは、理解しやすいよう store/index.js ストアをひとつにまとめていた。しかし先に述べたように、肥大化しがちなストアの分割は今後必須になるため、Vuex 本家にならって **modules**への分割する。ストアの分離はおおむね以下の手順を踏む。
 
-### store/index.jsの変更（１）
+### store/index.js の変更（１）
 
-単独の**index.js**のときは、ストアの定義とオブジェクトの作成がすべてその中で行われたが、vuexの各プロパティ（state, mutations, actions, getters）をカテゴリ別のファイルに分離する（ここでは**products.js**と**cart.js**）。
+単独の**index.js**のときは、ストアの定義とオブジェクトの作成がすべてその中で行われたが、vuex の各プロパティ（state, mutations, actions, getters）をカテゴリ別のファイルに分離する（ここでは**products.js**と**cart.js**）。
 
-商品関連のステートデータは**modules/products.js**に格納する。
+商品関連のステートデータは**modules/products.js**ファイルに格納する。
 
 ```js
-import shop from '../../api/shop'
+import shop from "../../api/shop"
 
 // initial state
 const state = {
@@ -281,20 +281,20 @@ const getters = {}
 
 // actions
 const actions = {
-  getAllProducts ({ commit }) {
-    shop.getProducts(products => {
-      commit('setProducts', products)
+  getAllProducts({ commit }) {
+    shop.getProducts((products) => {
+      commit("setProducts", products)
     })
   }
 }
 
 // mutations
 const mutations = {
-  setProducts (state, products) {
+  setProducts(state, products) {
     state.all = products
   },
-  decrementProductInventory (state, { id }) {
-    const product = state.all.find(product => product.id === id)
+  decrementProductInventory(state, { id }) {
+    const product = state.all.find((product) => product.id === id)
     product.inventory--
   }
 }
@@ -308,9 +308,10 @@ export default {
 }
 ```
 
-最後に**namespaced**プロパティを**true**にした上で、各プロパティをexportする。
+すべてを store/index.js ファイルに記述したときと少し異なるところは、各プロパティ（state など）ごとに独立したオブジェクトとしているこことだ。（これが単なるオブジェクトの記述法の違いなのかはまだ不詳。）
+最後に**namespaced**プロパティを**true**にした上で、各プロパティを export する。
 
-ショッピングカート関連のデータは**modules/cart.js**に格納する。
+ショッピングカート関連のデータは**modules/cart.js**ファイルに格納する。
 
 ```js
 // initial state
@@ -324,7 +325,9 @@ const state = {
 const getters = {
   cartProducts: (state, getters, rootState) => {
     return state.items.map(({ id, quantity }) => {
-      const product = rootState.products.all.find(product => product.id === id)
+      const product = rootState.products.all.find(
+        (product) => product.id === id
+      )
       return {
         title: product.title,
         price: product.price,
@@ -341,52 +344,56 @@ const getters = {
 
 // actions
 const actions = {
-  checkout ({ commit, state }, products) {
+  checkout({ commit, state }, products) {
     const savedCartItems = [...state.items]
-    commit('setCheckoutStatus', null)
+    commit("setCheckoutStatus", null)
     // empty cart
-    commit('setCartItems', { items: [] })
+    commit("setCartItems", { items: [] })
     shop.buyProducts(
       products,
-      () => commit('setCheckoutStatus', 'successful'),
+      () => commit("setCheckoutStatus", "successful"),
       () => {
-        commit('setCheckoutStatus', 'failed')
+        commit("setCheckoutStatus", "failed")
         // rollback to the cart saved before sending the request
-        commit('setCartItems', { items: savedCartItems })
+        commit("setCartItems", { items: savedCartItems })
       }
     )
   },
-  addProductToCart ({ state, commit }, product) {
-    commit('setCheckoutStatus', null)
+  addProductToCart({ state, commit }, product) {
+    commit("setCheckoutStatus", null)
     if (product.inventory > 0) {
-      const cartItem = state.items.find(item => item.id === product.id)
+      const cartItem = state.items.find((item) => item.id === product.id)
       if (!cartItem) {
-        commit('pushProductToCart', { id: product.id })
+        commit("pushProductToCart", { id: product.id })
       } else {
-        commit('incrementItemQuantity', cartItem)
+        commit("incrementItemQuantity", cartItem)
       }
       // remove 1 item from stock
-      commit('products/decrementProductInventory', { id: product.id }, { root: true })
+      commit(
+        "products/decrementProductInventory",
+        { id: product.id },
+        { root: true }
+      )
     }
   }
 }
 
 // mutations
 const mutations = {
-  pushProductToCart (state, { id }) {
+  pushProductToCart(state, { id }) {
     state.items.push({
       id,
       quantity: 1
     })
   },
-  incrementItemQuantity (state, { id }) {
-    const cartItem = state.items.find(item => item.id === id)
+  incrementItemQuantity(state, { id }) {
+    const cartItem = state.items.find((item) => item.id === id)
     cartItem.quantity++
   },
-  setCartItems (state, { items }) {
+  setCartItems(state, { items }) {
     state.items = items
   },
-  setCheckoutStatus (state, status) {
+  setCheckoutStatus(state, status) {
     state.checkoutStatus = status
   }
 }
@@ -400,16 +407,17 @@ export default {
 }
 ```
 
-こちらもproducts.js同様に各プロパティをexportしている。
+このソースで見慣れないところは、**getters** プロパティの各引数が **state** だけでなく、**getters** や **rootState** が渡されているところだ。これが Vuex4 の新機能かな（要ドキュメントチェック）？また各機能の実装が少し高度になっているので難解な感じだ。
+最後にこちらも products.js 同様に各プロパティを個別に export している。
 
-### store/index.jsの変更 （２）
+### store/index.js の変更 （２）
 
 次に分割して作成したストアデータを使用するように**index.js**を修正する。
 
 ```js
-import { createStore, createLogger } from 'vuex'
-import cart from './modules/cart'
-import products from './modules/products'
+import { createStore, createLogger } from "vuex"
+import cart from "./modules/cart"
+import products from "./modules/products"
 export default createStore({
   modules: {
     cart,
@@ -422,29 +430,36 @@ export default createStore({
 
 ### コンポーネントからのアクセス
 
-クライアントコンポーネントから複数のモジュールに分割されたvuexの**action**関数、**getters**プロパティへの参照はシングルストアのときとはすこし異なる。
-store/index.jsの**modules**に設定したキーをaction関数名、gettersプロパティの前に付ける必要がある。
+クライアントコンポーネントから複数のモジュールに分割された vuex の**action**関数、**getters**プロパティへの参照はシングルストアのときとはすこし異なる。
+store/index.js の**modules**に設定したキーを action 関数名、getters プロパティの前に付けて呼び出す（参照する）必要がある。
 
-- **vuexのステートデータの参照**（以前はすべてgetters経由で行っていたが、gettersの設定なしで取得する場合）
-  
+#### **■ vuex のステートデータの参照**
+
+以前はすべて getters 経由で行っていたが、getters の設定なしで取得する場合
+
 ```js
 const all = computed(() => store.state.products.all)
 ```
-- **Action**
+
+これはモジュール products の all プロパティを取得している。
+
+#### **■ Action**
 
 ```js
 store.dispatch("products/getAllProducts")
 ```
 
-- **getters** (gettersにストアのcomputed的役割をもたせて設定されたもの)
+これはモジュール products のアクション関数 getAllProducts を"**products/getAllProducts**"をアクション名として呼び出している。
+
+#### **■ getters**
+
+getters にストアの computed 的役割をもたせて設定されたもの
 
 ```js
 const cartProducts = computed(() => store.getters["cart/cartProducts"])
 ```
 
-
-
-
+こちらはモジュール cart のプロパティ cartProducts を"**cart/cartProducts**"をキー名として取得している。
 
 ## 参照
 
