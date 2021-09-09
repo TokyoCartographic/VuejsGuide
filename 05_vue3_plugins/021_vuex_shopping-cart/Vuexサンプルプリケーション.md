@@ -407,7 +407,7 @@ export default {
 }
 ```
 
-このソースで見慣れないところは、**getters** プロパティの各引数が **state** だけでなく、**getters** や **rootState** が渡されているところだ。これが Vuex4 の新機能かな（要ドキュメントチェック）？また各機能の実装が少し高度になっているので難解な感じだ。
+このソースで見慣れないところは、**getters** プロパティの各引数が **state** だけでなく、**getters** や **rootState** が渡されているところだ。これが Vuex4 の新機能かな（要[ドキュメント](https://next.vuex.vuejs.org/ja/guide/getters.html#%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3%E3%82%B9%E3%82%BF%E3%82%A4%E3%83%AB%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9)チェック）？また各機能の実装が少し高度になっているので難解な感じだ。
 最後にこちらも products.js 同様に各プロパティを個別に export している。
 
 ### store/index.js の変更 （２）
@@ -468,3 +468,5 @@ const cartProducts = computed(() => store.getters["cart/cartProducts"])
 - [Vuex 本家サンプル](https://github.com/vuejs/vuex/tree/4.0/examples/composition)
 
 - [【vue.js】ショッピングカートを作って Vuex を理解](https://reffect.co.jp/vue/vue-js-shopping-cart-example)
+
+- [JavaScript ES6（ECMAScript 2015）で追加された機能](https://www.webdesignleaves.com/pr/jquery/javaascript_02.html)
