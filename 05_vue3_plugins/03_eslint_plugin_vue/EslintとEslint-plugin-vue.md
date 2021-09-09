@@ -2,17 +2,19 @@
 
 Linter は、プログラムの静的検証（シンタックスエラーの検出）ツール。
 
-- [Eslint](https://eslint.org/) JavaScript の静的検証ツール。
-- [Eslint-plugin-vue](https://eslint.vuejs.org/) .vue ファイルの静的検証ツール。
+- [Eslint](https://eslint.org/) JavaScript の静的検証ツール（V.7.32 2021.9 時点）。
+- [Eslint-plugin-vue](https://eslint.vuejs.org/) .vue ファイルの静的検証ツール（V.7.17 2021.9 時点）。
 
-これらは Vue プログラムを作成するときのほぼ必須ツールになる（eslint-plugin-vue は日本人が作っているらしい）。
+これらは Vue プログラムを作成するときほぼ必須のツールになる（eslint-plugin-vue は日本人が作っているらしい）。
 
 Vue-cli でプロジェクトを作るとき Manually select features で Linter / Formatter にチェックを入れると導入される。
 Vite で始めたときは、自分でインストールする。
 
 ```shell
-yarn add eslint eslint-plugin-vue
+yarn add eslint eslint-plugin-vue --dev
 ```
+
+eslint-plugin-vue のドキュメントによれば、Vue のバージョン 3.2 までのシンタックスはサポートしているとのこと（現時点の Vue は 3.2）。
 
 ## 設定ファイル
 
