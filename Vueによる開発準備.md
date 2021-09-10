@@ -92,7 +92,7 @@ Vue は、2014 年の公開からかなりの年月が経ていて、バージ�
 
 ## 参考
 
-Vue の専門学校(?)の出しているチートシートと TypeScript のガイドブック
+Vue の専門学校(?)の出しているチートシートと Future Corporation の提供している TypeScript のガイドブック
 
 - [A_VueJS_Cheatsheet_for_Developers-LearnVue.pdf](./A_VueJS_Cheatsheet_for_Developers-LearnVue.pdf)
 - [Vue-3-Cheat-Sheet](./Vue-3-Cheat-Sheet.pdf)
