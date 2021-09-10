@@ -47,7 +47,7 @@ console.log(isRef(robj)) // true
 
 ## toRefs
 
-**toRefs**は、引数のリアクティブオブジェクトのプロパティの値を ref オブジェクトに変換する。
+**toRefs**は、引数のリアクティブオブジェクトを、そのプロパティが ref オブジェクトに変換された通常のオブジェクトに変換する。
 
 ```js
 const state = reactive({
