@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li class="products" v-for="product in products" v-bind:key="product.id">
+    <li class="products" v-for="product in products" :key="product.id">
       {{ product.title }} - {{ product.price }}
       <button
         :disabled="!product.inventory"
@@ -22,7 +22,8 @@ export default {
     store.dispatch("products/getAllProducts")
     return {
       products: computed(() => store.state.products.all),
-      addProductToCart: (product) => store.dispatch("cart/addProductToCart", product)
+      addProductToCart: (product) =>
+        store.dispatch("cart/addProductToCart", product)
     }
   }
 }
