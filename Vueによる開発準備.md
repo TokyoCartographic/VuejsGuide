@@ -90,4 +90,12 @@ npm init vite
 
 Vue は、2014 年の公開からかなりの年月が経ていて、バージョンも現時点では 3 まで変遷している。そのためネット上にはかなり大量の情報が存在する。それらの多くは古いものが多いためネットでのリサーチのときは、記事の対象のバージョンや情報の年月にも注意が必要だ。検索で見つかる Vue 本体のドキュメント自体でさえも古いバージョンのものであることがよくある。
 
+## 参考
+
+Vue の専門学校(?)の出しているチートシートと TypeScript のガイドブックを示す。
+
+- [A_VueJS_Cheatsheet_for_Developers-LearnVue.pdf](./A_VueJS_Cheatsheet_for_Developers-LearnVue.pdf)
+- [Vue-3-Cheat-Sheet](./Vue-3-Cheat-Sheet.pdf)
+- [TypeScript-Guide](./typescript-guide.pdf)
+
 以上
