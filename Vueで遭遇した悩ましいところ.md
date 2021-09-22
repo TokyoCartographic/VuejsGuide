@@ -9,7 +9,24 @@
   v-bind:clickedTarget="clickedTarget"
 />
 ```
-ところが子のほうではデータが空になっていた。なぜか？
+ところが子のほうではpropsデータclickedTargetが空になっていた。なぜか？
+ここでclikedTargetは空のオブジェクト（refオブジェクト）として初期化され、for-inで表示されたボタンが押下されたら、そのオブジェクトをclickedTargetに代入していた。
+
+```js
+let clickedTarget = reactive({})
+const btnClick = (item) => {
+  clickedTarget = item
+}
+```
+
+ここでは単なる代入はダメ。setup内に以下のように記述すると値は期待通り渡された。
+
+```js
+const clickedTarget = reactive({})
+const btnClick = (item) => {
+  Object.assign(clickedTarget, item)
+}
+```
 
 
 ## 兄弟コンポーネント間のデータやりとり
@@ -19,10 +36,12 @@
 ### 親から子
 
 プロパティにより子にデータを渡す。
+親からそれぞれの子に同じプロパティを渡せば、結果的に兄弟は同じものを手にすることができる。
 
 ### 子から親
 
 イベントの値としてデータを親に渡す。
+子は自分のプロパティをなんらかの時点で親にイベント経由で渡し、親はイベントを受信したら別の子に渡すプロパティを更新する。
 
 ### Vuex
 
