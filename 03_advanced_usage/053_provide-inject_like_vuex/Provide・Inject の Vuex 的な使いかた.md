@@ -74,7 +74,7 @@ export default {
 
 ## Parent.vue
 
-親コンポーネントでは今度は provide は行わない。
+親コンポーネントでは今度は provide は行わない。setup 内の処理は 3 つのコンポーネントで共通なので分離し commonSetup.js に集約した。
 
 ```js
 <script>
@@ -106,6 +106,35 @@ export default {
   </div>
 </template>
 ```
+
+commonSetup.js の内容は以下のとおり。
+
+```js
+import { computed } from "vue"
+import { useStore } from "../../store/store.js"
+/**
+ * 共通初期化
+ * @returns {Object} object & function
+ * @desc 各コンポーネント（親、子、孫）のsetupが同じ内容であるため集約
+ */
+export const commonSetup = () => {
+  const store = useStore()
+  const count = computed(() => store.getCount.value)
+  const updateCount = () => {
+    store.updateCount()
+  }
+  return {
+    count,
+    updateCount
+  }
+}
+```
+
+store.js から useStore を import し、useStore()で store オブジェクトを取得する。store オブジェクトの getCount プロパティから参照 ref オブジェクトを生成。store オブジェクトの updateCount 関数を実行する関数 updateCount を作成し、return している。
+
+## 結果
+
+こんどは、どのコンポーネントの update ボタンを押しても数値はインクリメント（更新）される。これは updateCount 関数の中では、provide された initStore 内で宣言された関数が実行されるからかな？
 
 ## 参考
 
