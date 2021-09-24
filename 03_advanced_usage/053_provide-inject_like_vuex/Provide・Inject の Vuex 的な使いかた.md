@@ -118,7 +118,7 @@ import { useStore } from "../../store/store.js"
  * @desc 各コンポーネント（親、子、孫）のsetupが同じ内容であるため集約
  */
 export const commonSetup = () => {
-  const store = useStore()
+  const store = useStore() // injectデータを持つオブジェクトを取得
   const count = computed(() => store.getCount.value)
   const updateCount = () => {
     store.updateCount()
