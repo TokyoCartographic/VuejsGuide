@@ -1,22 +1,13 @@
 <script>
-import { computed } from "vue"
+import { commonSetup } from "./libs/commonSetup.js"
 import Child from "./Child.vue"
-import { useStore } from "../store/store"
 export default {
   name: "Parent",
   components: {
     Child
   },
   setup() {
-    const store = useStore()
-    const count = computed(() => store.getCount.value)
-    const updateCount = () => {
-      store.updateCount()
-    }
-    return {
-      count,
-      updateCount
-    }
+    return commonSetup()
   }
 }
 </script>

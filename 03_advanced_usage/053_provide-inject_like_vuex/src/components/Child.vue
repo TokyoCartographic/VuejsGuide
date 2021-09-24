@@ -1,6 +1,5 @@
 <script>
-import { computed } from "vue"
-import { useStore } from "../store/store"
+import { commonSetup } from "./libs/commonSetup.js"
 import Grandchild from "./Grandchild.vue"
 export default {
   name: "Child",
@@ -8,15 +7,7 @@ export default {
     Grandchild
   },
   setup() {
-    const store = useStore()
-    const count = computed(() => store.getCount.value)
-    const updateCount = () => {
-      store.updateCount()
-    }
-    return {
-      count,
-      updateCount
-    }
+    return commonSetup()
   }
 }
 </script>

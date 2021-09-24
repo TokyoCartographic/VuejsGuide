@@ -12,7 +12,7 @@ export default {
       "count",
       computed(() => count.value)
     )
-    // provide("count", count.value) // これはダメ
+    // provide("count", count.value) // これでは同期しない
     const updateCount = () => {
       count.value++
     }
