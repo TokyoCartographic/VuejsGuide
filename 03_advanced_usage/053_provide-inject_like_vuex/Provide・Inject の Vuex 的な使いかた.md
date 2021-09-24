@@ -136,6 +136,8 @@ store.js から useStore 関数 を import し、store オブジェクトを取�
 
 こんどは、どのコンポーネントの update ボタンを押しても数値はインクリメント（更新）される。これは updateCount 関数の中では、provide された initStore 内で宣言された関数が実行されるからかな？
 
+今回は vuex を利用したときと同じ名前のフォルダ src/store に store.js を格納したが、vuex と併用するときは、別の名称にしたほうがよいかも。
+
 ## 参考
 
 - [Provide/Inject API With Vue 3](https://www.thisdot.co/blog/provide-inject-api-with-vue-3)
