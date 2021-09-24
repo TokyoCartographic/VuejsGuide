@@ -130,7 +130,7 @@ export const commonSetup = () => {
 }
 ```
 
-store.js から useStore を import し、useStore()で store オブジェクトを取得する。store オブジェクトの getCount プロパティから参照 ref オブジェクトを生成。store オブジェクトの updateCount 関数を実行する関数 updateCount を作成し、return している。
+store.js から useStore 関数 を import し、store オブジェクトを取得する。store オブジェクトの getCount プロパティから参照 ref オブジェクトを生成。store オブジェクトの updateCount 関数を実行する関数 updateCount を作成し、return している。
 
 ## 結果
 
