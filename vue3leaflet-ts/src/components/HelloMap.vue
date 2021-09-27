@@ -2,15 +2,16 @@
   <div id="map"></div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue"
 import { map, tileLayer } from "leaflet"
 import "leaflet/dist/leaflet.css"
 import { onMounted, onBeforeUnmount } from "vue"
 
-export default {
+export default defineComponent({
   name: "HelloMap",
   setup() {
-    let myMap = null
+    let myMap: any = null
 
     onMounted(() => {
       myMap = map("map").setView([36.575, 135.984], 5)
@@ -24,7 +25,7 @@ export default {
       myMap.remove()
     })
   }
-}
+})
 </script>
 
 <style scoped>

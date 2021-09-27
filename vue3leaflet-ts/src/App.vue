@@ -2,7 +2,7 @@
   <HelloMap />
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import HelloMap from "./components/HelloMap.vue"
 </script>
 
