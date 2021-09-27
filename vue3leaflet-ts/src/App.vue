@@ -2,14 +2,8 @@
   <HelloMap />
 </template>
 
-<script>
+<script setup>
 import HelloMap from "./components/HelloMap.vue"
-export default {
-  name: "App",
-  components: {
-    HelloMap
-  }
-}
 </script>
 
 <style>
