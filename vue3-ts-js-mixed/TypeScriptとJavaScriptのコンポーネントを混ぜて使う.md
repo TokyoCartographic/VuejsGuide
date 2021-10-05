@@ -1,6 +1,6 @@
 # TypeScript と JavaScript のコンポーネントを混ぜて使う
 
-TypeScript ベースのプロジェクトで JavaScript の SFC（単一ファイルコンポーネント）を使ってみる。
+TypeScript ベースの Vue3 プロジェクトで JavaScript の SFC（単一ファイルコンポーネント）を混ぜて使ってみる。
 
 まずは tsconfig.json で以下の設定を追加する。
 
