@@ -15,15 +15,16 @@ export default {
     onMounted(() => {
       myMap = map("map").setView([36.575, 135.984], 5)
       tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
       }).addTo(myMap)
+      // console.log("myMap:", myMap)
+      // console.log(myMap.getCenter())
     })
     onBeforeUnmount(() => {
       myMap.remove()
     })
-  }
+  },
 }
 </script>
 
