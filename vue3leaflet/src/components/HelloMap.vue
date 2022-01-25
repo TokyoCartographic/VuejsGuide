@@ -13,6 +13,7 @@ export default {
     let myMap = null
 
     onMounted(() => {
+      console.log("hellomap mounted")
       myMap = map("map").setView([36.575, 135.984], 5)
       tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
