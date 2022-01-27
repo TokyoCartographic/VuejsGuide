@@ -23,6 +23,7 @@ export default {
       // console.log(myMap.getCenter())
     })
     onBeforeUnmount(() => {
+      console.log("hellomap unmounted")
       myMap.remove()
     })
   },
