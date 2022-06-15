@@ -27,6 +27,35 @@ const btnClick = (item) => {
 }
 ```
 
+## Proxyオブジェクトを普通のオブジェクトにしたい
+
+Vue3のreactiveなオブジェクトはProxyオブジェクトになっている。普通はそのまま普通のオブジェクトのようにしてアクセス・参照できる。しかしどうしても生のオブジェクトが必要なときもある。そのときは以下のようなやりかたがある。
+
+```ts
+const vreactobj = reactive({a: 1})
+```
+
+いちばんプリミティブで一番確実な方法（ネストしたオブジェクトでも動作）：
+
+```ts
+const rawobj = JSON.parse(JSON.strigify(vreactobj))
+```
+
+**Object.assign**を使う。
+
+```ts
+const rawobj = Object.assign({}, vreactobj)
+```
+
+
+ES6の**スプレッド構文**を使う。
+
+```ts
+const rawobj = { ...vreactobj }
+```
+
+**Object.assign**や**スプレッド構文**はネストしていないオブジェクトのときのみ利用できる。
+
 ## 兄弟コンポーネント間のデータやりとり
 
 カプセル化したオブジェクトに近い Vue のコンポーネント（SFC）間のデータのやりとりは通常以下の方法がある。
